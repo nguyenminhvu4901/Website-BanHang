@@ -7,8 +7,6 @@ Trang chu post
 // echo '<pre>';
 // print_r($post_detail);
 // echo '</pre>';
-
-echo '<pre>';
 print_r($info);
 echo '</pre>';
 
