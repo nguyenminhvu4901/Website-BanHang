@@ -7,7 +7,7 @@ class Post extends Controller
     }
     public function index()
     {
-        echo "a";
+        echo "Ngu";
         // $post = $this->model('PostModel');
         // $dataPost1 = $post->getPostList();
         // $dataPost2 = $post->getPostDetail();

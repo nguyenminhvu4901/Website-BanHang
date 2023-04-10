@@ -34,19 +34,35 @@ class App
         $url = $this->__routes->handleRoute($url);
         $urlArr = array_filter(explode('/', $url));
         $urlArr = array_values($urlArr);
-        // $urlCheck = '';
-        // foreach ($urlArr as $item) {
-        //     echo $item . '<br>';
-        // }
+        //Check folder and file in url
+        $urlCheck = '';
+        if (!empty($urlArr)) {
+            foreach ($urlArr as $key => $value) {
+                $urlCheck .= $value . '/';
+                $fileCheck = rtrim($urlCheck, '/');
+                $fileArr = explode('/', $fileCheck);
+                $fileArr[count($fileArr) - 1] = ucfirst($fileArr[count($fileArr) - 1]);
+                $fileCheck = implode('/', $fileArr);
+                if (!empty($urlArr[$key - 1])) {
+                    unset($urlArr[$key - 1]);
+                }
+                if (file_exists("app/Controller/" . $fileCheck . "Controller.php")) {
+                    $urlCheck = $fileCheck;
+                    break;
+                }
+            }
+            $urlArr = array_values($urlArr);
+        }
         //Controller
         if (!empty($urlArr[0])) {
             $this->controller = ucfirst($urlArr[0]);
         } else {
             $this->controller = ucfirst($this->controller);
         }
+        //echo "app/Controller/" . $urlCheck . "Controller.php";
         //Di tu index
-        if (file_exists("app/Controller/$this->controller" . "Controller.php")) {
-            require_once "app/Controller/$this->controller" . "Controller.php";
+        if (file_exists("app/Controller/" . $urlCheck . "Controller.php")) {
+            require_once "app/Controller/" . $urlCheck . "Controller.php"; 
             //Check this->controller exists
             if (class_exists($this->controller)) {
                 $this->controller = new $this->controller();
