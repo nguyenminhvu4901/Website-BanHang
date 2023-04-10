@@ -30,6 +30,7 @@ class App
     public function hanldleUrl()
     {
         $url = $this->getUrl();
+
         //Filter URL
         $url = $this->__routes->handleRoute($url);
         $urlArr = array_filter(explode('/', $url));
@@ -53,16 +54,21 @@ class App
             }
             $urlArr = array_values($urlArr);
         }
+       
         //Controller
         if (!empty($urlArr[0])) {
             $this->controller = ucfirst($urlArr[0]);
         } else {
             $this->controller = ucfirst($this->controller);
         }
-        //echo "app/Controller/" . $urlCheck . "Controller.php";
+        //Check if urlCheck empty
+        if (empty($urlCheck)) {
+            $urlCheck = $this->controller;
+        }
+        //echo $urlCheck;
         //Di tu index
         if (file_exists("app/Controller/" . $urlCheck . "Controller.php")) {
-            require_once "app/Controller/" . $urlCheck . "Controller.php"; 
+            require_once "app/Controller/" . $urlCheck . "Controller.php";
             //Check this->controller exists
             if (class_exists($this->controller)) {
                 $this->controller = new $this->controller();

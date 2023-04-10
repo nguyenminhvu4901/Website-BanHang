@@ -9,8 +9,12 @@ class Route
         // echo '<pre>';
         // print_r($routes);
         // echo '</pre>';
+        
         $url = trim($url, '/');
-
+        if(empty($url)){
+            $url ='/';
+        }
+        
         $handleUrl = $url;
         if (!empty($routes)) {
             foreach ($routes as $key => $value) {
