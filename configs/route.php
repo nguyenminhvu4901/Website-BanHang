@@ -3,7 +3,7 @@ $routes['default_controller'] = 'Home';
 
 // Đường dẫn ảo => Đường dẫn thật
 //Home
-$routes['trang-chu'] = 'home';
+$routes['trang-chu'] = 'home/create';
 
 //Post
 $routes['san-pham'] = 'post/detail';

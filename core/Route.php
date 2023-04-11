@@ -20,7 +20,6 @@ class Route
             foreach ($routes as $key => $value) {
                 if (preg_match('~' . $key . '~is', $url)) {
                     $handleUrl = preg_replace('~' . $key . '~is', $value, $url);
-                    // var_dump($key);
                 }
             }
         }

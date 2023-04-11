@@ -1,5 +1,4 @@
 <?php
-
 class Home extends Controller
 {
 
@@ -12,16 +11,22 @@ class Home extends Controller
     }
     public function index()
     {
-        $data = $this->modelHome->getList();
-        // echo "<pre>";
-        // print_r($data);
-        // echo "</pre>";
-
-        $data1 = $this->modelHome->getDetail(1);
-        // echo "<pre>";
-        // print_r($data);
-        // echo "</pre>";
-
+        $result = $this->modelHome->index();
+        $data['result'] = $result;
+        //require_once('app/Views/Homes/index.php');
         $this->render('Homes/index', $data);
+    }
+
+    public function create()
+    {
+        $name = $_REQUEST['name'];
+        $a = "helo";
+        $this->render('Homes/create', compact($a));
+    }
+
+    public function show($id)
+    {
+        $rows = $this->modelHome->show($id);
+        require_once('app/Views/Homes/show.php');
     }
 }

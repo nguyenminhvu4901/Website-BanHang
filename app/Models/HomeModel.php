@@ -1,27 +1,30 @@
 <?php
 
-class HomeModel
+class HomeModel extends Model
 {
-    protected $table = "home";
-    //Tra ve toan bo
-    public function getList()
+    private $conn;
+    protected $_table = 'MyGuests';
+    function __construct()
     {
-        $data = [
-            'Item 1',
-            'a',
-            'c'
-        ];
+        parent::__construct();
+        // $this->conn = mysqli_connect('127.0.0.1', 'root', '', 'myDB');
+        // //Check connection
+        // if (!$this->conn) {
+        //     die("Connection failed: " . mysqli_connect_error());
+        // }
+    }
+    public function index()
+    {
+        $data = $this->db->query("SELECT * FROM $this->_table")->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
 
-    //Tra ve theo id
-    public function getDetail($id)
+    public function show($id)
     {
-        $data = [
-            'Item 1',
-            'a',
-            'c'
-        ];
-        return $data[$id];
+        $sql = "SELECT * FROM MyGuests WHERE id = $id";
+        $result = mysqli_query($this->conn, $sql);
+        //Lay ban ghi dau tien
+        $rows = mysqli_fetch_array($result);
+        return $rows;
     }
 }
