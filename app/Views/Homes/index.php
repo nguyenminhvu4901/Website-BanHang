@@ -21,6 +21,7 @@
         </thead>
         <tbody>
             <?php
+            
             foreach ($result as $row) { ?>
                 <tr>
                     <th scope="row"><?php echo $row["id"] ?></th>

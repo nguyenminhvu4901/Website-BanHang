@@ -31,6 +31,7 @@ if (!empty($config['database'])) {
     $db_config = array_filter($config['database']);
     if (!empty($db_config)) {
         require_once 'core/Connection.php';
+        require_once 'core/QueryBuilder.php';
         require_once 'core/Database.php';
         // $db = new Database();
         // $query = $db->query("SELECT * FROM MyGuests")->fetchAll(PDO::FETCH_ASSOC);
@@ -48,3 +49,5 @@ require_once "app/Core/App.php";
 require_once "core/Controller.php";
 //Base Model
 require_once "core/Model.php";
+//Request
+require_once "core/Request.php";

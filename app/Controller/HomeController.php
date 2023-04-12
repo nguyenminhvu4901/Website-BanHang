@@ -1,32 +1,34 @@
 <?php
 class Home extends Controller
 {
-
-    public $modelHome;
+    public $province;
     public function __construct()
     {
         // require_once _DIR_ROOT.'/app/Models/HomeModel.php';
         // $this->model = new HomeModel();
-        $this->modelHome = $this->model('HomeModel');
+        $this->province = $this->model('HomeModel');
     }
     public function index()
     {
-        $result = $this->modelHome->index();
+        $result = $this->province->index();
         $data['result'] = $result;
-        //require_once('app/Views/Homes/index.php');
         $this->render('Homes/index', $data);
     }
 
     public function create()
     {
         $name = $_REQUEST['name'];
-        $a = "helo";
-        $this->render('Homes/create', compact($a));
+        $this->render('Homes/create');
     }
 
     public function show($id)
     {
-        $rows = $this->modelHome->show($id);
-        require_once('app/Views/Homes/show.php');
+        $rows = $this->province->show($id);
+        $data['result'] = $rows;
+        $this->render('Homes/show', $data);
+    }
+
+    public function getTable(){
+       $this->province->getTable();  
     }
 }

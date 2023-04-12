@@ -13,7 +13,8 @@ class Connection
             $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$conn = $con;
         } catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+            $mess = $e->getMessage();
+            App::$app->loadError('Database', ['mess' => $mess]);
         }
     }
 

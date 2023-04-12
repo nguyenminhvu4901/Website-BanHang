@@ -1,5 +1,4 @@
 <h1>Trang show</h1>
-
 <table class="table">
     <thead>
         <tr>
@@ -10,14 +9,13 @@
         </tr>
     </thead>
     <tbody>
+        <?php foreach ($result as $row) : ?>
             <tr>
-                <th scope="row"><?php echo $rows["id"] ?></th>
-                <td><?php echo  $rows["firstname"] ?></td>
-                <td><?php echo $rows['lastname'] ?></td>
-                <td><?php echo $rows['email'] ?></td>
+                <th scope="row"><?php echo $row["id"] ?></th>
+                <td><?php echo  $row["firstname"] ?></td>
+                <td><?php echo $row['lastname'] ?></td>
+                <td><?php echo $row['email'] ?></td>
             </tr>
+        <?php endforeach; ?>
     </tbody>
 </table>
-<form action="home/index" method="get">
-Thoat<input type="submit">
-</form>

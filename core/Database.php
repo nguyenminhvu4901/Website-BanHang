@@ -2,6 +2,7 @@
 //Lop nay dung de ket noi db
 class Database
 {
+    use QueryBuilder;
     private $__conn;
     function __construct()
     {
