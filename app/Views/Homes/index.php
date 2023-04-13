@@ -29,7 +29,7 @@
                     <td><?php echo $row['lastname'] ?></td>
                     <td><?php echo $row['email'] ?></td>
                     <td>
-                        <form method='GET' action="home/show/<?php echo $row["id"] ?>">
+                        <form method='GET' action="<?php echo _WEB_ROOT ?>/home/show/<?php echo $row["id"] ?>">
                             <input type="submit">
                         </form>
                     </td>

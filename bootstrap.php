@@ -51,3 +51,5 @@ require_once "core/Controller.php";
 require_once "core/Model.php";
 //Request
 require_once "core/Request.php";
+//Response
+require_once "core/Response.php";

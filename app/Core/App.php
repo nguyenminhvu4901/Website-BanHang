@@ -54,11 +54,11 @@ class App
                     break;
                 }
             }
-            $urlArr = array_values($urlArr);
+            //$urlArr = array_values($urlArr);
         }
-       
-        //Controller
+        $check = '';
         if (!empty($urlArr[0])) {
+            $check = $urlArr[0];
             $this->controller = ucfirst($urlArr[0]);
         } else {
             $this->controller = ucfirst($this->controller);
@@ -82,8 +82,14 @@ class App
         }
         //Action
         if (!empty($urlArr[1])) {
-            $this->action = $urlArr[1];
-            unset($urlArr[1]);
+            if ($urlArr[1] == $check) {
+                $this->action = $urlArr[2];
+                unset($urlArr[1]);
+                unset($urlArr[2]);
+            } else {
+                $this->action = $urlArr[1];
+                unset($urlArr[1]);
+            }
         }
         //Params
         $this->params = array_values($urlArr);

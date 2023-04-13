@@ -17,9 +17,20 @@ class Home extends Controller
 
     public function create()
     {
-        $name = $_REQUEST['name'];
+        //$name = $_REQUEST['name'];
         $this->render('Homes/create');
     }
+    public function store(){
+        $request = new Request();
+        $data =  $request->getFields()['name'];
+        //echo $data;
+        $response = new Response();
+        $response->redirect('Homes/index');
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
+        //$this->render('Homes/store');
+     }
 
     public function show($id)
     {
@@ -31,4 +42,11 @@ class Home extends Controller
     public function getTable(){
        $this->province->getTable();  
     }
+
+    public function getA(){
+       $request = new Request();
+       var_dump($request->getMethod());
+    }
+
+ 
 }

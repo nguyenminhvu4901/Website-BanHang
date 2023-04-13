@@ -9,11 +9,7 @@
 </head>
 
 <body>
-    <form method='post' action="<?php echo _WEB_ROOT?>/home/store">
-        Name<input type="text" name="name">
-        Age<input type="text" name="hi">
-        <input type="submit">
-    </form>
+    <h1>Store</h1>
 </body>
 
 </html>

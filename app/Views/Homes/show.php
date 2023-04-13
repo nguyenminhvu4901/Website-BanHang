@@ -19,3 +19,4 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+<a href="<?php echo _WEB_ROOT?>/home/index">Thoat</a>
