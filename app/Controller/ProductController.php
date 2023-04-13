@@ -6,19 +6,21 @@ class Product extends Controller
         echo "Day la san pham";
     }
 
-    public function create(){
+    public function create()
+    {
         $this->render('Products/create');
     }
 
-    public function store(){
+    public function store()
+    {
         $request = new Request();
         //Set rule
         $request->rules([
-            'name' => 'required|string|min:2',
+            'name' => 'required|string|min:2,3,4',
             'email' => 'required|email',
             'password' => 'required|min:8',
             'repassword' => 'required|min:8|match:password',
-            
+
         ]);
         //Set message
         $request->messages([
@@ -32,12 +34,16 @@ class Product extends Controller
             'repassword.match' => 'Mật khẩu nhập lại cần phải trùng khớp với mật khẩu trên',
         ]);
         $validate = $request->validate();
+
+        echo '<pre>';
+        print_r($request->__errors);
+        echo '</pre>';
         //$this->render('Products/store');
     }
 
     public function detail()
     {
-        
+
         echo "Day la detail product";
     }
 }
