@@ -43,6 +43,13 @@
             ?>
         </div>
         <div>
+            Age <input type="number" name="age">
+            <br>
+            <?php
+            echo (!empty($errors) && array_key_exists('age', $errors)) ? '<span style="color:red">' . $errors['age'] . '</span>' : false;
+            ?>
+        </div>
+        <div>
             Phone <input type="number" name='phone'>
             <br>
         </div>

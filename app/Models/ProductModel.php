@@ -18,9 +18,10 @@ class ProductModel extends Model
         return '*';
     }
 
-    public function index(){
+    public function index()
+    {
         $data = $this->db->query("SELECT * FROM Product")
-        ->fetchAll(PDO::FETCH_ASSOC);
+            ->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
 
@@ -29,7 +30,8 @@ class ProductModel extends Model
         $name = $items['name'];
         $email = $items['email'];
         $password = $items['password'];
-        $data = $this->db->query("INSERT INTO Product (name, email, password) VALUES ('$name', '$email', '$password')")
+        $age = $items['age'];
+        $data = $this->db->query("INSERT INTO Product (name, email, password, age) VALUES ('$name', '$email', '$password', '$age')")
             ->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }

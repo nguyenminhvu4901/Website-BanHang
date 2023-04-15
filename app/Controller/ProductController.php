@@ -21,7 +21,7 @@ class Product extends Controller
     public function store()
     {
         $request = new Request();
-       
+
         if ($request->isPost()) {
             // echo '<pre>';
             // print_r($request->getFields());
@@ -32,6 +32,7 @@ class Product extends Controller
                 'email' => 'required|email|min:6|unique:product:email',
                 'password' => 'required|min:8',
                 'repassword' => 'required|min:8|match:password',
+                'age' => 'required|callback_check_age',
 
             ]);
             //Set message
@@ -47,6 +48,8 @@ class Product extends Controller
                 'repassword.required' => 'Cần phải nhập lại mật khẩu',
                 'repassword.match' => 'Mật khẩu nhập lại cần phải trùng khớp với mật khẩu trên',
                 'repassword.min' => 'Mật khẩu cần ít nhất 8 kí tự',
+                'age.required' => 'Tuổi không được để trống',
+                'age.callback_check_age' => 'Tuổi không được nhỏ hơn 20',
             ]);
             //Check du dk hay khong
             //Nhan gia tri true hoac false
@@ -64,19 +67,21 @@ class Product extends Controller
                 $result = $request->getFields();
                 $data = $this->province->store($result);
                 $response = new Response();
-                $response->redirect('product/index');
-                //$this->render('Products/store');
                 //redirect ve index
+                $response->redirect('product/index');
             }
         } else {
             $response = new Response();
             $response->redirect('product/create');
         }
+    }
 
-        // echo '<pre>';
-        // print_r($request->__errors);
-        // echo '</pre>';
-        //$this->render('Products/store');
+    public function check_age($age){
+        if($age > 20){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function detail()
@@ -85,15 +90,15 @@ class Product extends Controller
         echo "Day la detail product";
     }
 
-    public function edit($id){
-
+    public function edit($id)
+    {
     }
 
-    public function update($id){
-
+    public function update($id)
+    {
     }
 
-    public function destroy($id){
-    
+    public function destroy($id)
+    {
     }
 }

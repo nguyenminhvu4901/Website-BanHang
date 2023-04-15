@@ -107,6 +107,10 @@ class App
             $this->loadError();
         }
     }
+    //Lay gia tri controller
+    public function getCurrentController(){
+        return $this->controller;
+    }
 
     public function loadError($name = '404', $data = [])
     {

@@ -17,6 +17,7 @@
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col">Password</th>
+      <th scope="col">Age</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@
       <td><?php echo $value['name']?></td>
       <td><?php echo $value['email']?></td>
       <td><?php echo $value['password']?></td>
+      <td><?php echo $value['age']?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

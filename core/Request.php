@@ -143,6 +143,7 @@ class Request
                             $checkValidate = false;
                         }
                     }
+                    //check duy nhat
                     if ($ruleName == 'unique') {
                         //Ten bang
                         $tableName = null;
@@ -155,24 +156,41 @@ class Request
                         if (!empty($ruleArr[2])) {
                             $fieldCheck = $ruleArr[2];
                         }
-          
+
                         if (!empty($tableName) && !empty($fieldCheck)) {
                             //Ko co them id
                             if (count($ruleArr) == 3) {
-                                $result = $this->db->query("SELECT $fieldCheck FROM $tableName WHERE $fieldCheck = '" . $dataFields[$fieldCheck] . "'")->rowCount();
-                            //Co them id
-                            //Dung trong update
+                                $result = $this->db->query("SELECT $fieldCheck FROM $tableName WHERE $fieldCheck = '" . trim($dataFields[$fieldCheck]) . "'")->rowCount();
+                                //Co them id
+                                //Dung trong update
                             } else if (count($ruleArr) == 4) {
-                                if(!empty($ruleArr[3] && preg_match('~.+?\=~is', $ruleArr[3]))){
+                                if (!empty($ruleArr[3] && preg_match('~.+?\=~is', $ruleArr[3]))) {
                                     $conditionWhere = $ruleArr[3];
                                     $conditionWhere = str_replace('=', '<>', $conditionWhere);
-                                    $result = $this->db->query("SELECT $fieldCheck FROM $tableName WHERE $fieldCheck = '" . $dataFields[$fieldCheck] . "' AND $conditionWhere")->rowCount();
-                                }                             
+                                    $result = $this->db->query("SELECT $fieldCheck FROM $tableName WHERE $fieldCheck = '" . trim($dataFields[$fieldCheck]) . "' AND $conditionWhere")->rowCount();
+                                }
                             }
 
                             if (!empty($result)) {
                                 $this->setErrors($key, $ruleName);
                                 $checkValidate = false;
+                            }
+                        }
+                    }
+
+                    //Check callback
+                    if (preg_match('~^callback_(.+)~is', $ruleName, $callbackArr)) {
+                        if (!empty($callbackArr[1])) {
+                            //ten sau callback (tuong ung vs ten ham)
+                            $callbackName = $callbackArr[1];
+                            $controller = App::$app->getCurrentController();
+                            //check neu toi tai ham dk
+                            if (method_exists($controller, $callbackName)) {
+                                $checkCallback = call_user_func_array([$controller, $callbackName], [trim($dataFields[$key])]);
+                                if (!$checkCallback) {
+                                    $this->setErrors($key, $ruleName);
+                                    $checkValidate = false;
+                                }
                             }
                         }
                     }
