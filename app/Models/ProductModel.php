@@ -18,7 +18,13 @@ class ProductModel extends Model
         return '*';
     }
 
-    public function store1($items = [])
+    public function index(){
+        $data = $this->db->query("SELECT * FROM Product")
+        ->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+    public function store($items = [])
     {
         $name = $items['name'];
         $email = $items['email'];

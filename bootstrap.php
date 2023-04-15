@@ -33,6 +33,7 @@ if (!empty($config['database'])) {
         require_once 'core/Connection.php';
         require_once 'core/QueryBuilder.php';
         require_once 'core/Database.php';
+        require_once 'core/DB.php';
         // $db = new Database();
         // $query = $db->query("SELECT * FROM MyGuests")->fetchAll(PDO::FETCH_ASSOC);
         // echo '<pre>';

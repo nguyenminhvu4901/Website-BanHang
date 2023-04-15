@@ -2,7 +2,8 @@
 
 class Controller
 {
-
+    public $db;
+    //tra ve model
     public function model($model)
     {
         if (file_exists(_DIR_ROOT . '/app/Models/' . $model . '.php')) {
@@ -15,6 +16,7 @@ class Controller
         return false;
     }
 
+    //Tra ve view
     public function render($view, $data = [])
     {
         extract($data);

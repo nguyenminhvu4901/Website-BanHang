@@ -8,7 +8,9 @@ class Product extends Controller
     }
     public function index()
     {
-        echo "Day la san pham";
+        $result = $this->province->index();
+        $data['result'] = $result;
+        $this->render('Products/index', $data);
     }
 
     public function create()
@@ -19,6 +21,7 @@ class Product extends Controller
     public function store()
     {
         $request = new Request();
+       
         if ($request->isPost()) {
             // echo '<pre>';
             // print_r($request->getFields());
@@ -26,7 +29,7 @@ class Product extends Controller
             //Set rule
             $request->rules([
                 'name' => 'required|min:2,3,4',
-                'email' => 'required|email',
+                'email' => 'required|email|min:6|unique:product:email',
                 'password' => 'required|min:8',
                 'repassword' => 'required|min:8|match:password',
 
@@ -37,6 +40,8 @@ class Product extends Controller
                 'name.min' => 'Tên phải có ít nhất 2 kí tự',
                 'email.required' => 'Email không được để trống',
                 'email.email' => 'Cần nhập đúng định dạng email',
+                'email.min' => 'Email phải có ít nhất 6 kí tự',
+                'email.unique' => 'Email đã tồn tại, vui lòng thử lại',
                 'password.required' => 'Mật khẩu không được để trống',
                 'password.min' => 'Mật khẩu cần ít nhất 8 kí tự',
                 'repassword.required' => 'Cần phải nhập lại mật khẩu',
@@ -57,7 +62,7 @@ class Product extends Controller
                 $this->render('Products/create', $this->data);
             } else {
                 $result = $request->getFields();
-                $data = $this->province->store1($result);
+                $data = $this->province->store($result);
                 $response = new Response();
                 $response->redirect('product/index');
                 //$this->render('Products/store');

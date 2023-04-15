@@ -1,10 +1,7 @@
 <?php
 class App
 {
-    private $controller;
-    private $action;
-    private $params;
-    private $__routes;
+    private $controller, $action, $params, $__routes, $__db, $__request;
     static public $app;
     function __construct()
     {
@@ -16,6 +13,13 @@ class App
         }
         $this->action = 'index';
         $this->params = [];
+        if (class_exists('DB')) {
+            $dbObject = new DB();
+            $this->__db = $dbObject->db;
+        }
+        $this->__request = new Request();
+        $this->__request->db = $this->__db;
+        //Goi controller tuong ung
         $this->hanldleUrl();
     }
 
@@ -74,6 +78,9 @@ class App
             if (class_exists($this->controller)) {
                 $this->controller = new $this->controller();
                 unset($urlArr[0]);
+                if (!empty($this->__db)) {
+                    $this->controller->db = $this->__db;
+                }
             } else {
                 $this->loadError();
             }

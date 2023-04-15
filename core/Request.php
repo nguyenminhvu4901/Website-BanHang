@@ -2,8 +2,13 @@
 
 class Request
 {
-    private $__rules = [], $__messages = [];
-    public $__errors = [];
+    private $__rules = [], $__messages = [], $__errors = [];
+    public $db;
+
+    function __construct()
+    {
+        $this->db = new Database();
+    }
     public function getMethod()
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
@@ -138,6 +143,39 @@ class Request
                             $checkValidate = false;
                         }
                     }
+                    if ($ruleName == 'unique') {
+                        //Ten bang
+                        $tableName = null;
+                        //Ten cot
+                        $fieldCheck = null;
+                        if (!empty($ruleArr[1])) {
+                            $tableName = $ruleArr[1];
+                        }
+
+                        if (!empty($ruleArr[2])) {
+                            $fieldCheck = $ruleArr[2];
+                        }
+          
+                        if (!empty($tableName) && !empty($fieldCheck)) {
+                            //Ko co them id
+                            if (count($ruleArr) == 3) {
+                                $result = $this->db->query("SELECT $fieldCheck FROM $tableName WHERE $fieldCheck = '" . $dataFields[$fieldCheck] . "'")->rowCount();
+                            //Co them id
+                            //Dung trong update
+                            } else if (count($ruleArr) == 4) {
+                                if(!empty($ruleArr[3] && preg_match('~.+?\=~is', $ruleArr[3]))){
+                                    $conditionWhere = $ruleArr[3];
+                                    $conditionWhere = str_replace('=', '<>', $conditionWhere);
+                                    $result = $this->db->query("SELECT $fieldCheck FROM $tableName WHERE $fieldCheck = '" . $dataFields[$fieldCheck] . "' AND $conditionWhere")->rowCount();
+                                }                             
+                            }
+
+                            if (!empty($result)) {
+                                $this->setErrors($key, $ruleName);
+                                $checkValidate = false;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -148,9 +186,9 @@ class Request
     public function getErrors($fieldName = '')
     {
         if (!empty($this->__errors)) {
-            if(empty($fieldName)){
+            if (empty($fieldName)) {
                 $errorsArr = [];
-                foreach($this->__errors as $key => $value) {
+                foreach ($this->__errors as $key => $value) {
                     $errorsArr[$key] = reset($value);
                 }
                 return $errorsArr;
@@ -159,8 +197,6 @@ class Request
             return reset($this->__errors[$fieldName]);
         }
         return false;
-
-       
     }
 
     //Set Errors 
