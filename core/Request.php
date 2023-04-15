@@ -70,22 +70,20 @@ class Request
     public function messages($message = [])
     {
         $this->__messages = $message;
-        
     }
     //Run validation
     public function validate()
     {
-       
         //Lam min rules
         $this->__rules = array_filter($this->__rules);
-
+        $checkValidate = true;
         if (!empty($this->__rules)) {
             $dataFields = $this->getFields();
-            
+
             //Lay key trong rule
             //key la name truyen vao cua bien
             foreach ($this->__rules as $key => $value) {
-               
+
                 //echo $dataFields[$key];
                 //Tach tung rule thanh tung mang
                 //$ruleItemArr la cac mang value dieu kien 
@@ -96,37 +94,78 @@ class Request
                     //Tach tung rule thanh tung mang
                     $ruleArr = explode(':', $rule);
                     //gan phan tu dau tien cua mang vao $ruleName
-                    //$ruleName la tung dieu kien validate
+                    //$ruleName la tung dieu kien validate (required, string,...)
                     $ruleName = reset($ruleArr);
                     //if phan tu trong mang lon hon 1 
                     if (count($ruleArr) > 1) {
                         //gan cac phan tu con lai cho $ruleValue
-                        //La nhung gia tri sau dau :
+                        //La nhung gia tri sau dau : (2, 3, password)
                         $ruleValue = end($ruleArr);
                     }
                     //Check từng rule
                     if ($ruleName == 'required') {
                         //kiem tra xem neu nguoi dung khong nhap gia tri
                         if (empty($dataFields[$key])) {
-                            $this->__errors[$key][$ruleName] = $this->__messages[$key . '.' . $ruleName];
-                        
+                            $this->setErrors($key, $ruleName);
+                            $checkValidate = false;
                         }
                     }
 
+                    if ($ruleName == 'min') {
+                        if (strlen(trim($dataFields[$key])) < $ruleValue) {
+                            $this->setErrors($key, $ruleName);
+                            $checkValidate = false;
+                        }
+                    }
 
+                    if ($ruleName == 'max') {
+                        if (strlen(trim($dataFields[$key])) > $ruleValue) {
+                            $this->setErrors($key, $ruleName);
+                            $checkValidate = false;
+                        }
+                    }
 
-                    // var_dump('Name '.$ruleName.' value '.$ruleValue);
-                    // echo '<br>';
-                    // echo '<pre>';
-                    // print_r($ruleItemArr);
-                    // echo '</pre>';
+                    if ($ruleName == 'email') {
+                        if (!filter_var($dataFields[$key], FILTER_VALIDATE_EMAIL)) {
+                            $this->setErrors($key, $ruleName);
+                            $checkValidate = false;
+                        }
+                    }
+
+                    if ($ruleName == 'match') {
+                        if (trim($dataFields[$key] != trim($dataFields[$ruleValue]))) {
+                            $this->setErrors($key, $ruleName);
+                            $checkValidate = false;
+                        }
+                    }
                 }
             }
         }
+        return $checkValidate;
     }
 
     //Get Errors
-    public function errors($fieldName)
+    public function getErrors($fieldName = '')
     {
+        if (!empty($this->__errors)) {
+            if(empty($fieldName)){
+                $errorsArr = [];
+                foreach($this->__errors as $key => $value) {
+                    $errorsArr[$key] = reset($value);
+                }
+                return $errorsArr;
+            }
+            //Lay loi dau tien xuat hien cua moi truong
+            return reset($this->__errors[$fieldName]);
+        }
+        return false;
+
+       
+    }
+
+    //Set Errors 
+    public function setErrors($key, $ruleName)
+    {
+        $this->__errors[$key][$ruleName] = $this->__messages[$key . '.' . $ruleName];
     }
 }

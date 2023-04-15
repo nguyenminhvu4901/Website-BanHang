@@ -2,9 +2,14 @@
 
 class Response
 {
-    public function redirect($uri=''){
-        $url = _WEB_ROOT . '/app/Views/' . $uri . '.php';
-        header("location:" .$url);
+    public function redirect($uri = '')
+    {
+        if (preg_match('~^(http|https)~is', $uri)) {
+            $url = $uri;
+        } else {
+            $url = _WEB_ROOT . '/' . $uri;
+        }
+        header("location:" . $url);
         exit();
     }
 }

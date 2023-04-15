@@ -1,6 +1,11 @@
 <?php
 class Product extends Controller
 {
+    public $province, $data;
+    public function __construct()
+    {
+        $this->province = $this->model('ProductModel');
+    }
     public function index()
     {
         echo "Day la san pham";
@@ -14,30 +19,58 @@ class Product extends Controller
     public function store()
     {
         $request = new Request();
-        //Set rule
-        $request->rules([
-            'name' => 'required|string|min:2,3,4',
-            'email' => 'required|email',
-            'password' => 'required|min:8',
-            'repassword' => 'required|min:8|match:password',
+        if ($request->isPost()) {
+            // echo '<pre>';
+            // print_r($request->getFields());
+            // echo '</pre>';
+            //Set rule
+            $request->rules([
+                'name' => 'required|min:2,3,4',
+                'email' => 'required|email',
+                'password' => 'required|min:8',
+                'repassword' => 'required|min:8|match:password',
 
-        ]);
-        //Set message
-        $request->messages([
-            'name.required' => 'Họ tên không được để trống',
-            'name.min' => 'Tên phải có ít nhất 2 kí tự',
-            'email.required' => 'Email không được để trống',
-            'email.email' => 'Cần nhập đúng định dạng email',
-            'password.required' => 'Mật khẩu không được để trống',
-            'password.min' => 'Mật khẩu cần ít nhất 8 kí tự',
-            'repassword.required' => 'Cần phải nhập lại mật khẩu',
-            'repassword.match' => 'Mật khẩu nhập lại cần phải trùng khớp với mật khẩu trên',
-        ]);
-        $validate = $request->validate();
+            ]);
+            //Set message
+            $request->messages([
+                'name.required' => 'Họ tên không được để trống',
+                'name.min' => 'Tên phải có ít nhất 2 kí tự',
+                'email.required' => 'Email không được để trống',
+                'email.email' => 'Cần nhập đúng định dạng email',
+                'password.required' => 'Mật khẩu không được để trống',
+                'password.min' => 'Mật khẩu cần ít nhất 8 kí tự',
+                'repassword.required' => 'Cần phải nhập lại mật khẩu',
+                'repassword.match' => 'Mật khẩu nhập lại cần phải trùng khớp với mật khẩu trên',
+                'repassword.min' => 'Mật khẩu cần ít nhất 8 kí tự',
+            ]);
+            //Check du dk hay khong
+            //Nhan gia tri true hoac false
+            $validate = $request->validate();
+            //
+            if (!$validate) {
+                //In ra loi
+                $this->data['errors'] = $request->getErrors();
+                //In ra thong bao
+                $this->data['msg'] = 'Đã có lỗi xảy ra, vui lòng thử lại';
+                //In ra du lieu cu
+                $this->data['old'] = $request->getFields();
+                $this->render('Products/create', $this->data);
+            } else {
+                $result = $request->getFields();
+                $data = $this->province->store1($result);
+                $response = new Response();
+                $response->redirect('product/index');
+                //$this->render('Products/store');
+                //redirect ve index
+            }
+        } else {
+            $response = new Response();
+            $response->redirect('product/create');
+        }
 
-        echo '<pre>';
-        print_r($request->__errors);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($request->__errors);
+        // echo '</pre>';
         //$this->render('Products/store');
     }
 
@@ -45,5 +78,17 @@ class Product extends Controller
     {
 
         echo "Day la detail product";
+    }
+
+    public function edit($id){
+
+    }
+
+    public function update($id){
+
+    }
+
+    public function destroy($id){
+    
     }
 }

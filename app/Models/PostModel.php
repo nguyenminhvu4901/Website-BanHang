@@ -1,7 +1,20 @@
 <?php
 
-class PostModel
+class PostModel 
 {
+    private $_table = 'Post';
+    // function __construct()
+    // {
+    //     parent::__construct();
+    // }
+
+    // function tableFill(){
+    //     return 'MyGuests';
+    // }
+
+    // function fieldFill(){
+    //     return '*';
+    // }
     public function getPostList()
     {
         return [
