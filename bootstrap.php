@@ -21,7 +21,12 @@ if (!empty($configs_dir)) {
         }
     }
 }
-
+//Code filter url 
+require_once "core/Route.php";
+//Session
+require_once "core/Session.php";
+//Code xu ly chinh url
+require_once "app/Core/App.php";
 //Load route de custom url cho controller
 require_once "configs/route.php";
 //info db
@@ -42,10 +47,7 @@ if (!empty($config['database'])) {
     }
 }
 
-//Code filter url 
-require_once "core/Route.php";
-//Code xu ly chinh url
-require_once "app/Core/App.php";
+
 //BaseController
 require_once "core/Controller.php";
 //Base Model
