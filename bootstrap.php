@@ -31,6 +31,8 @@ require_once "app/Core/App.php";
 require_once "configs/route.php";
 //info db
 require_once "configs/database.php";
+//session
+require_once "configs/session.php";
 //Check config va load DB
 if (!empty($config['database'])) {
     $db_config = array_filter($config['database']);
@@ -39,11 +41,6 @@ if (!empty($config['database'])) {
         require_once 'core/QueryBuilder.php';
         require_once 'core/Database.php';
         require_once 'core/DB.php';
-        // $db = new Database();
-        // $query = $db->query("SELECT * FROM MyGuests")->fetchAll(PDO::FETCH_ASSOC);
-        // echo '<pre>';
-        // print_r($query);
-        // echo '</pre>';
     }
 }
 

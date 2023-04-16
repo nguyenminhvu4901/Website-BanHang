@@ -8,6 +8,7 @@ class Product extends Controller
     }
     public function index()
     {
+        $data['msg'] =  Session::flash('msg');
         $result = $this->province->index();
         $data['result'] = $result;
         $this->render('Products/index', $data);
@@ -15,13 +16,19 @@ class Product extends Controller
 
     public function create()
     {
-        $this->render('Products/create');
+         //In ra loi
+         $this->data['errors'] =  Session::flash('errors');
+         //In ra thong bao
+         $this->data['msg'] = Session::flash('msg');
+         //In ra du lieu cu
+         $this->data['old'] = Session::flash('old');
+         $this->render('Products/create', $this->data);
     }
 
     public function store()
     {
         $request = new Request();
-
+        $response = new Response();
         if ($request->isPost()) {
             // echo '<pre>';
             // print_r($request->getFields());
@@ -56,30 +63,27 @@ class Product extends Controller
             $validate = $request->validate();
             //
             if (!$validate) {
-                //In ra loi
-                $this->data['errors'] = $request->getErrors();
-                //In ra thong bao
-                $this->data['msg'] = 'Đã có lỗi xảy ra, vui lòng thử lại';
-                //In ra du lieu cu
-                $this->data['old'] = $request->getFields();
-                $this->render('Products/create', $this->data);
+                Session::flash('errors', $request->getErrors());
+                Session::flash('msg', 'Đã có lỗi xảy ra, vui lòng thử lại');
+                Session::flash('old', $request->getFields());      
+                $response->redirect('product/create');
             } else {
                 $result = $request->getFields();
                 $data = $this->province->store($result);
-                $response = new Response();
+                Session::flash('msg', 'Thêm product thành công');
                 //redirect ve index
                 $response->redirect('product/index');
             }
         } else {
-            $response = new Response();
             $response->redirect('product/create');
         }
     }
 
-    public function check_age($age){
-        if($age > 20){
+    public function check_age($age)
+    {
+        if ($age > 20) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
