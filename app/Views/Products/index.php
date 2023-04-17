@@ -11,6 +11,7 @@
 <body>
   <?php
   echo (!empty($msg)) ? $msg : false;
+  echo (!empty($mess)) ? '<br>' . $mess : false;
   ?>
   <form action="<?php echo _WEB_ROOT ?>/product/create" method="get">
     <button type="submit">Thêm sản phẩm</button>

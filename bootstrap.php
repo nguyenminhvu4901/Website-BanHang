@@ -13,7 +13,7 @@ $web_root = $web_root . $folder;
 define('_WEB_ROOT', $web_root);
 
 //Auto load configs
-$configs_dir = scandir('config');
+$configs_dir = scandir('configs');
 if (!empty($configs_dir)) {
     foreach ($configs_dir as $key => $value) {
         if ($value != '.' && $value != '..' && file_exists('configs/' . $value)) {
@@ -21,6 +21,17 @@ if (!empty($configs_dir)) {
         }
     }
 }
+if (!empty($config['app']['services'])) {
+    $allServices = $config['app']['services'];
+    if (!empty($allServices)) {
+        foreach ($allServices as $serviceName) {
+            if (file_exists('app/Core/' . $serviceName . '.php')) {
+                require_once 'app/Core/' . $serviceName . '.php';
+            }
+        }
+    }
+}
+
 //Code filter url 
 require_once "core/Route.php";
 //Session
@@ -55,6 +66,8 @@ if (!empty($allHelpers)) {
         }
     }
 }
+//Mail
+require_once "Mail/SendMail.php";
 //BaseController
 require_once "core/Controller.php";
 //Base Model

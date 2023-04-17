@@ -1,3 +1,7 @@
 <?php
 
-$config['app'] = [];
+$config['app'] = [
+    'services' => [
+        HtmlHelper::class,
+    ]
+];

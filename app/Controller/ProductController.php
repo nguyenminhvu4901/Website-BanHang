@@ -9,6 +9,7 @@ class Product extends Controller
     public function index()
     {
         $data['msg'] =  Session::flash('msg');
+        $data['mess'] = Session::flash('mess');
         $result = $this->province->index();
         $data['result'] = $result;
         $this->render('Products/index', $data);

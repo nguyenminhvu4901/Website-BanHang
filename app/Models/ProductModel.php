@@ -33,6 +33,7 @@ class ProductModel extends Model
         $age = $items['age'];
         $data = $this->db->query("INSERT INTO Product (name, email, password, age) VALUES ('$name', '$email', '$password', '$age')")
             ->fetchAll(PDO::FETCH_ASSOC);
+        SendMail($email, "Xin chào " . $name, "Mật khẩu của bạn là " . $password);
         return $data;
     }
 }
