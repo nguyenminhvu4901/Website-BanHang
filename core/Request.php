@@ -197,6 +197,9 @@ class Request
                 }
             }
         }
+        $sessionKey = Session::isInvalid();
+        Session::flash($sessionKey.'_errors', $this->getErrors());
+        Session::flash($sessionKey.'_old', $this->getFields());
         return $checkValidate;
     }
 

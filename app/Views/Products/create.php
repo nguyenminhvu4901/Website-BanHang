@@ -15,38 +15,45 @@
     ?>
     <form action="<?php echo _WEB_ROOT ?>/product/store" method="post">
         <div>
-            Name<input type="text" name="name" value='<?php echo (!empty($old['name'])) ? $old['name'] : false  ?>'>
+            Name<input type="text" name="name" value='<?php echo old('name') //echo (!empty($old['name'])) ? $old['name'] : false  
+                                                        ?>'>
             <br>
             <?php
-            echo (!empty($errors) && array_key_exists('name', $errors)) ? '<span style="color:red">' . $errors['name'] . '</span>' : false;
+            echo form_error('name', '<span style="color:red">', '</span>')
+            //echo (!empty($errors) && array_key_exists('name', $errors)) ? '<span style="color:red">' . $errors['name'] . '</span>' : false;
             ?>
         </div>
         <div>
-            Email<input type="email" name="email" value='<?php echo (!empty($old['email'])) ? $old['email'] : false  ?>'>
+            Email<input type="email" name="email" value='<?php echo old('email') //echo (!empty($old['email'])) ? $old['email'] : false  
+                                                            ?>'>
             <br>
             <?php
-            echo (!empty($errors) && array_key_exists('email', $errors)) ? '<span style="color:red">' . $errors['email'] . '</span>' : false;
+            echo form_error('email', '<span style="color:red">', '</span>')
+            //echo (!empty($errors) && array_key_exists('email', $errors)) ? '<span style="color:red">' . $errors['email'] . '</span>' : false;
             ?>
         </div>
         <div>
             Password <input type="password" name="password">
             <br>
             <?php
-            echo (!empty($errors) && array_key_exists('password', $errors)) ? '<span style="color:red">' . $errors['password'] . '</span>' : false;
+            echo form_error('password', '<span style="color:red">', '</span>')
+            //echo (!empty($errors) && array_key_exists('password', $errors)) ? '<span style="color:red">' . $errors['password'] . '</span>' : false;
             ?>
         </div>
         <div>
             RePassword <input type="password" name="repassword">
             <br>
             <?php
-            echo (!empty($errors) && array_key_exists('repassword', $errors)) ? '<span style="color:red">' . $errors['repassword'] . '</span>' : false;
+            echo form_error('repassword', '<span style="color:red">', '</span>')
+            //echo (!empty($errors) && array_key_exists('repassword', $errors)) ? '<span style="color:red">' . $errors['repassword'] . '</span>' : false;
             ?>
         </div>
         <div>
-            Age <input type="number" name="age">
+            Age <input type="number" name="age" value='<?php echo old('age') ?>'>
             <br>
             <?php
-            echo (!empty($errors) && array_key_exists('age', $errors)) ? '<span style="color:red">' . $errors['age'] . '</span>' : false;
+            echo form_error('age', '<span style="color:red">', '</span>')
+            // echo (!empty($errors) && array_key_exists('age', $errors)) ? '<span style="color:red">' . $errors['age'] . '</span>' : false;
             ?>
         </div>
         <div>

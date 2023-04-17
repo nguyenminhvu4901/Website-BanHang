@@ -16,13 +16,13 @@ class Product extends Controller
 
     public function create()
     {
-         //In ra loi
-         $this->data['errors'] =  Session::flash('errors');
-         //In ra thong bao
-         $this->data['msg'] = Session::flash('msg');
-         //In ra du lieu cu
-         $this->data['old'] = Session::flash('old');
-         $this->render('Products/create', $this->data);
+        //In ra loi
+       // $this->data['errors'] =  Session::flash('errors');
+        //In ra thong bao
+        $this->data['msg'] = Session::flash('msg');
+        //In ra du lieu cu
+        //$this->data['old'] = Session::flash('old');
+        $this->render('Products/create', $this->data);
     }
 
     public function store()
@@ -30,9 +30,6 @@ class Product extends Controller
         $request = new Request();
         $response = new Response();
         if ($request->isPost()) {
-            // echo '<pre>';
-            // print_r($request->getFields());
-            // echo '</pre>';
             //Set rule
             $request->rules([
                 'name' => 'required|min:2,3,4',
@@ -63,9 +60,9 @@ class Product extends Controller
             $validate = $request->validate();
             //
             if (!$validate) {
-                Session::flash('errors', $request->getErrors());
+                //Session::flash('errors', $request->getErrors());
                 Session::flash('msg', 'Đã có lỗi xảy ra, vui lòng thử lại');
-                Session::flash('old', $request->getFields());      
+                //Session::flash('old', $request->getFields());
                 $response->redirect('product/create');
             } else {
                 $result = $request->getFields();
@@ -90,7 +87,6 @@ class Product extends Controller
 
     public function detail()
     {
-
         echo "Day la detail product";
     }
 
