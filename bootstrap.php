@@ -31,19 +31,6 @@ if (!empty($config['app']['services'])) {
         }
     }
 }
-
-//Code filter url 
-require_once "core/Route.php";
-//Session
-require_once "core/Session.php";
-//Code xu ly chinh url
-require_once "app/Core/App.php";
-//Load route de custom url cho controller
-require_once "configs/route.php";
-//info db
-require_once "configs/database.php";
-//session
-require_once "configs/session.php";
 //Check config va load DB
 if (!empty($config['database'])) {
     $db_config = array_filter($config['database']);
@@ -54,9 +41,23 @@ if (!empty($config['database'])) {
         require_once 'core/DB.php';
     }
 }
+
+
+//Middelware
+require_once 'core/Middleware.php';
+//Code filter url 
+require_once "core/Route.php";
+//Session
+require_once "core/Session.php";
+//Load route de custom url cho controller
+require_once "configs/route.php";
+//info db
+require_once "configs/database.php";
+//session
+require_once "configs/session.php";
+
 //Load core Helper 
 require_once 'core/Helper.php';
-
 //Auto load Helpers
 $allHelpers = scandir('app/Helpers');
 if (!empty($allHelpers)) {
@@ -66,6 +67,8 @@ if (!empty($allHelpers)) {
         }
     }
 }
+//Code xu ly chinh url
+require_once "app/Core/App.php";
 //Mail
 require_once "Mail/SendMail.php";
 //BaseController

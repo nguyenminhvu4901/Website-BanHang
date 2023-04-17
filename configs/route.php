@@ -3,13 +3,11 @@ $routes['default_controller'] = 'Home';
 
 // Đường dẫn ảo => Đường dẫn thật
 //Home
-$routes['trang-chu'] = 'home/create';
-
-//Post
-$routes['san-pham'] = 'post/detail';
+$routes['trang-chu'] = 'home/index';
 //Product
-$routes['product.index'] = 'product/index';
-$routes['product.detail'] = 'product/detail';
+$routes['san-pham'] = 'product/index';
+$routes['them-san-pham'] = 'product/create';
+//Post
 
 //User
 //$routes['user.index/.+-(\d+).html'] = 'user/index/$1';

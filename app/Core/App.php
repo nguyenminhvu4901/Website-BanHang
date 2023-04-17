@@ -7,6 +7,7 @@ class App
     {
         global $routes, $config;
         self::$app = $this;
+        //Khoi tao doi tg Route
         $this->__routes = new Route();
         if (!empty($routes['default_controller'])) {
             $this->controller = $routes['default_controller'];
@@ -35,10 +36,14 @@ class App
 
     public function hanldleUrl()
     {
-        $url = $this->getUrl();
 
+        $url = $this->getUrl();
         //Filter URL
         $url = $this->__routes->handleRoute($url);
+        //Middleware App
+        $this->handleRouteMiddleware($this->__routes->getUri());
+        $this->handleGlobalMiddleware();
+
         $urlArr = array_filter(explode('/', $url));
         $urlArr = array_values($urlArr);
         //Check folder and file in url
@@ -108,7 +113,8 @@ class App
         }
     }
     //Lay gia tri controller
-    public function getCurrentController(){
+    public function getCurrentController()
+    {
         return $this->controller;
     }
 
@@ -116,5 +122,40 @@ class App
     {
         extract($data);
         require_once('app/Views/Errors/' . $name . '.php');
+    }
+
+    public function handleRouteMiddleware($routeKey)
+    {
+        global $config;
+        //Middelware App
+        if (!empty($config['app']['routeMiddleware'])) {
+            $routeMiddlewareArr = $config['app']['routeMiddleware'];
+            foreach ($routeMiddlewareArr as $key => $middlewareItem) {
+                if (trim($routeKey) == trim($key) && file_exists('app/Middlewares/' . $middlewareItem . '.php')) {
+                    require_once 'app/Middlewares/' . $middlewareItem . '.php';
+                    if (class_exists($middlewareItem)) {
+                        $middleWareObject = new $middlewareItem();
+                        $middleWareObject->handle();
+                    }
+                }
+            }
+        }
+    }
+
+    public function handleGlobalMiddleware()
+    {
+        global $config;
+        if (!empty($config['app']['globalMiddleware'])) {
+            $globalMiddlewareArr = $config['app']['globalMiddleware'];
+            foreach ($globalMiddlewareArr as $key => $middlewareItem) {
+                if (file_exists('app/Middlewares/' . $middlewareItem . '.php')) {
+                    require_once 'app/Middlewares/' . $middlewareItem . '.php';
+                    if (class_exists($middlewareItem)) {
+                        $middleWareObject = new $middlewareItem();
+                        $middleWareObject->handle();
+                    }
+                }
+            }
+        }
     }
 }
