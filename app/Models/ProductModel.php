@@ -34,10 +34,8 @@ class ProductModel extends Model
         $image = trim($items['image']);
         $imageName = trim($items['image']['name']);
         $imageSize = trim($items['image']['size']);
-        $target_dir = _WEB_ROOT . '/public/images/products/';
-        $target_file = $target_dir . $imageName;
-        // echo $target_file;
-        // die();
+        $target_file_show = trim(_WEB_ROOT . '/public/images/products/' . $imageName);
+        $target_file = trim(_DIR_ROOT . '/public/images/products/' . $imageName);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         // Check if image file is a actual image or fake image
@@ -84,7 +82,7 @@ class ProductModel extends Model
                 echo "Sorry, there was an error uploading your file.";
             }
         }
-        $data = $this->db->query("INSERT INTO Product (name, email, password, age, image) VALUES ('$name', '$email', '$password', '$age', '$target_file')")
+        $data = $this->db->query("INSERT INTO Product (name, email, password, age, image) VALUES ('$name', '$email', '$password', '$age', '$target_file_show')")
             ->fetchAll(PDO::FETCH_ASSOC);
         SendMail($email, "Xin chào " . $name, "Mật khẩu của bạn là " . $password);
         return $data;

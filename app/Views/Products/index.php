@@ -36,7 +36,8 @@
           <td><?php echo $value['email'] ?></td>
           <td><?php echo $value['password'] ?></td>
           <td><?php echo $value['age'] ?></td>
-          <td><img src="<?php echo $value['image'] ?>" width="100"></td>
+          <td><?php echo $value['image']  ?></td>
+          <td><img src="<?php echo $value['image']  ?>" onerror="this.onerror=null;this.src='<?php echo _WEB_ROOT . '/public/images/errors/error.jpg' ?>';" width="100"></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
