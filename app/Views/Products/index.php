@@ -24,16 +24,19 @@
         <th scope="col">Email</th>
         <th scope="col">Password</th>
         <th scope="col">Age</th>
+        <th scope="col">Image</th>
       </tr>
     </thead>
     <tbody>
       <?php foreach ($result as $value) : ?>
         <tr>
+
           <td><?php echo $value['id'] ?></td>
           <td><?php echo $value['name'] ?></td>
           <td><?php echo $value['email'] ?></td>
           <td><?php echo $value['password'] ?></td>
           <td><?php echo $value['age'] ?></td>
+          <td><img src="<?php echo $value['image'] ?>" width="100"></td>
         </tr>
       <?php endforeach; ?>
     </tbody>

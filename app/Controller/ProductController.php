@@ -67,6 +67,7 @@ class Product extends Controller
                 $response->redirect('product/create');
             } else {
                 $result = $request->getFields();
+                $result['image'] = $_FILES['image'];
                 $data = $this->province->store($result);
                 Session::flash('msg', 'Thêm product thành công');
                 //redirect ve index

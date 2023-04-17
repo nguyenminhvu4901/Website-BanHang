@@ -31,7 +31,7 @@ class Database
         return false;
     }
 
-    function update($table, $data, $condition = '')
+    function update1($table, $data, $condition = '')
     {
         if (!empty($data)) {
             $updateStr = '';

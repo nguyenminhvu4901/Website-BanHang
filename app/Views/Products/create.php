@@ -13,7 +13,7 @@
     <?php
     echo (!empty($msg)) ? $msg : false;
     ?>
-    <form action="<?php echo _WEB_ROOT ?>/product/store" method="post">
+    <form action="<?php echo _WEB_ROOT ?>/product/store" method="post" enctype="multipart/form-data">
         <div>
             Name<input type="text" name="name" value='<?php echo old('name') //echo (!empty($old['name'])) ? $old['name'] : false  
                                                         ?>'>
@@ -61,6 +61,10 @@
             <br>
         </div>
         <div>
+            Image <input type="file" name="image">
+            <br>
+        </div>
+        <div>
             Gender
             <br>
             Male<input type="radio" name="gender" value="male">
@@ -68,6 +72,7 @@
             Others<input type="radio" name="gender" value="others">
             <br>
         </div>
+
         <button type="submit">Thêm </button>
     </form>
 </body>
