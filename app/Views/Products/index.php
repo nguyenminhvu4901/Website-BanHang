@@ -25,6 +25,9 @@
         <th scope="col">Password</th>
         <th scope="col">Age</th>
         <th scope="col">Image</th>
+        <th scope="col">Detail</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -37,6 +40,21 @@
           <td><?php echo $value['password'] ?></td>
           <td><?php echo $value['age'] ?></td>
           <td><img src="<?php echo $value['image']  ?>" onerror="this.onerror=null;this.src='<?php echo _WEB_ROOT . '/public/images/errors/error.jpg' ?>';" width="100"></td>
+          <td>
+            <form action="<?php echo _WEB_ROOT ?>/product/detail/<?php echo $value['id'] ?> " method="get">
+              <button type="submit">Chi tiet</button>
+            </form>
+          </td>
+          <td>
+            <form action="<?php echo _WEB_ROOT ?>/product/edit/<?php echo $value['id'] ?> " method="get">
+              <button type="submit">Thay doi</button>
+            </form>
+          </td>
+          <td>
+            <form action="<?php echo _WEB_ROOT ?>/product/destroy/<?php echo $value['id'] ?> " method="get">
+              <button type="submit">Xoa</button>
+            </form>
+          </td>
         </tr>
       <?php endforeach; ?>
     </tbody>

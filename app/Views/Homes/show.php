@@ -1,4 +1,5 @@
 <h1>Trang show</h1>
+<h2>Xin chao <?php echo $name; ?></h2>
 <table class="table">
     <thead>
         <tr>
@@ -19,4 +20,4 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<a href="<?php echo _WEB_ROOT?>/home/index">Thoat</a>
+<a href="<?php echo _WEB_ROOT ?>/home/index">Thoat</a>

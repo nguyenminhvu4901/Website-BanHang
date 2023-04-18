@@ -197,6 +197,7 @@ class Request
                 }
             }
         }
+        //gan loi va du lieu cu vao day
         $sessionKey = Session::isInvalid();
         Session::flash($sessionKey.'_errors', $this->getErrors());
         Session::flash($sessionKey.'_old', $this->getFields());

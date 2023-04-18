@@ -37,6 +37,10 @@ class Home extends Controller
         if(!empty($id)){
             $rows = $this->province->show($id);
             $data['result'] = $rows;
+            $data['name'] = '';
+            foreach($rows as $row){
+                $data['name'] = $row['firstname'];
+            }
             $this->render('Homes/show', $data);
         }else{
             $response = new Response();
