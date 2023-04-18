@@ -8,7 +8,7 @@ class Connection
     {
         try {
             //Kết nối db
-            $con = new PDO("mysql:host=" . $config['host'] . ";dbname=" . $config['db'], $config['user'], $config['password']);
+            $con = new PDO("mysql:host=" . $config['host'] . ";dbname=" . $config['db'], $config['user'], '');
             // set the PDO error mode to exception
             $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$conn = $con;

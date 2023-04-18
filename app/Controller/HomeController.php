@@ -32,11 +32,17 @@ class Home extends Controller
         //$this->render('Homes/store');
      }
 
-    public function show($id)
+    public function show($id = '')
     {
-        $rows = $this->province->show($id);
-        $data['result'] = $rows;
-        $this->render('Homes/show', $data);
+        if(!empty($id)){
+            $rows = $this->province->show($id);
+            $data['result'] = $rows;
+            $this->render('Homes/show', $data);
+        }else{
+            $response = new Response();
+            $response->redirect('home/index');
+        }
+       
     }
 
     public function getTable(){

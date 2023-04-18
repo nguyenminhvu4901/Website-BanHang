@@ -18,6 +18,7 @@ class App
             $dbObject = new DB();
             $this->__db = $dbObject->db;
         }
+
         $this->__request = new Request();
         $this->__request->db = $this->__db;
         //Goi controller tuong ung
@@ -41,8 +42,9 @@ class App
         //Filter URL
         $url = $this->__routes->handleRoute($url);
         //Middleware App
-        $this->handleRouteMiddleware($this->__routes->getUri());
-        $this->handleGlobalMiddleware();
+        $this->handleRouteMiddleware($this->__routes->getUri(), $this->__db);
+        //Middleware Params
+        $this->handleGlobalMiddleware($this->__db);
 
         $urlArr = array_filter(explode('/', $url));
         $urlArr = array_values($urlArr);
@@ -124,7 +126,7 @@ class App
         require_once('app/Views/Errors/' . $name . '.php');
     }
 
-    public function handleRouteMiddleware($routeKey)
+    public function handleRouteMiddleware($routeKey, $db)
     {
         global $config;
         //Middelware App
@@ -135,6 +137,9 @@ class App
                     require_once 'app/Middlewares/' . $middlewareItem . '.php';
                     if (class_exists($middlewareItem)) {
                         $middleWareObject = new $middlewareItem();
+                        if (!empty($db)) {
+                            $middleWareObject->db = $db;
+                        }
                         $middleWareObject->handle();
                     }
                 }
@@ -142,7 +147,7 @@ class App
         }
     }
 
-    public function handleGlobalMiddleware()
+    public function handleGlobalMiddleware($db)
     {
         global $config;
         if (!empty($config['app']['globalMiddleware'])) {
@@ -152,6 +157,9 @@ class App
                     require_once 'app/Middlewares/' . $middlewareItem . '.php';
                     if (class_exists($middlewareItem)) {
                         $middleWareObject = new $middlewareItem();
+                        if (!empty($db)) {
+                            $middleWareObject->db = $db;
+                        }
                         $middleWareObject->handle();
                     }
                 }

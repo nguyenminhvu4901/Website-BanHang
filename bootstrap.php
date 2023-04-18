@@ -42,7 +42,8 @@ if (!empty($config['database'])) {
     }
 }
 
-
+//Load Model
+require_once 'core/Load.php';
 //Middelware
 require_once 'core/Middleware.php';
 //Code filter url 
